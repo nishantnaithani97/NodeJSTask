@@ -48,6 +48,41 @@ router.route('/task')
     });
 });
 
+router.route('/task/:task_id')
+.get(function(req,res){
+    Task.findById(req.params.task_id, function(err, task){
+        if(err)
+            res.send(err);
+        res.json({status : 'OK', data: task });
+    });
+})
+.put(function(req, res) {
+    Task.findById(req.params.task_id, function(err, task) {
+
+        if (err)
+            res.send(err);
+
+        task.name = req.body.name;  
+        
+        task.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Task Updated', data : task._id });
+        });
+
+    });
+})
+.delete(function(req, res) {
+    Task.remove({
+        _id: req.params.task_id
+    }, function(err, task) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'Successfully deleted' });
+    });
+});
 app.use('/api', router);
 
 app.listen(port);
