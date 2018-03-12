@@ -33,7 +33,7 @@ router.route('/task')
     task.save(function(err, result) {
     console.log('save task1');    
         if (err)
-            res.json({status : 'ok', error : 'Nhi hoga na bhai'});
+            res.json({status : 'ok', error : 'Something is wrong.'});
         else
         res.json({ status : 'ok', data : result._id });
     });
